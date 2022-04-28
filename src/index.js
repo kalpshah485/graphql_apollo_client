@@ -4,13 +4,30 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
+  gql,
 } from '@apollo/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const typeDefs = gql`
+  extend type users {
+    age: Int
+  }
+`
+
+const resolvers = {
+  users: {
+    age() {
+      return 35
+    }
+  }
+}
+
 const client = new ApolloClient({
   uri: 'https://api.spacex.land/graphql/',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  resolvers,
+  typeDefs
 });
 
 ReactDOM.render(
